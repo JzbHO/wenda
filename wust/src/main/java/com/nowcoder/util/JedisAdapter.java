@@ -64,24 +64,55 @@ public class JedisAdapter  implements InitializingBean {
 
 
 
-    //对
-    public long add(String key,String value){
+
+    @Override
+    public void afterPropertiesSet() throws Exception {
+        pool=new JedisPool("redis://localhost:6379/10");
+    }
+
+    public long sadd(String key,String value){
         Jedis jedis=null;
         try{
             jedis=pool.getResource();
             return jedis.sadd(key,value);
         }catch (Exception e){
-
+            System.out.println("发生异常"+e.getMessage());
         }finally {
-            if(jedis!=null)
+            if(jedis!=null){
                 jedis.close();
+            }
         }
         return 0;
     }
 
-
-    @Override
-    public void afterPropertiesSet() throws Exception {
-        pool=new JedisPool("");
+    public long srem(String key,String value){
+        Jedis jedis=null;
+        try{
+            jedis=pool.getResource();
+            return jedis.srem(key,value);
+        }catch (Exception e){
+            System.out.println("发生异常"+e.getMessage());
+        }finally {
+            if(jedis!=null){
+                jedis.close();
+            }
+        }
+        return 0;
     }
+    public boolean sismember(String key,String value) {
+        Jedis jedis = null;
+        try {
+            jedis = pool.getResource();
+            return jedis.sismember(key, value);
+        } catch (Exception e) {
+            System.out.println("发生异常" + e.getMessage());
+        } finally {
+            if (jedis != null) {
+                jedis.close();
+            }
+        }
+        return false;
+    }
+
+
 }
