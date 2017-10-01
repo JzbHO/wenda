@@ -28,6 +28,9 @@ public class CommentService {
         return commentDAO.updateStatus(1,commentId)>0;
     }
 
+    public Comment getCommenById(){
+        return new Comment();
+    }
 
 
 

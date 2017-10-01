@@ -15,6 +15,8 @@ public class WendaUtil {
     private static final Logger logger = LoggerFactory.getLogger(WendaUtil.class);
 
     public static int ANONY_USER=3;
+    public static int SYSTEM_USER=1;
+
     //返回JSON对象
     public static String getJSONString(int code,String msg){
         JSONObject json=new JSONObject();

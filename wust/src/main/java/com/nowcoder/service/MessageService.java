@@ -26,6 +26,6 @@ public class MessageService {
     }
 
 
-
-
+    public void addMessage(Message message) {
+    }
 }
