@@ -65,7 +65,8 @@ public class Test {
 
         }
         public  static  void main(String []args){
-        testExecutor();
+        Date date=new Date();
+        System.out.print(date.getTime());
 
 
         }

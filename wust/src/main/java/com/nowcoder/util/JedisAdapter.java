@@ -9,6 +9,7 @@ import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by Administrator on 2017/8/14 0014.
@@ -26,44 +27,46 @@ public class JedisAdapter  implements InitializingBean {
         Jedis jedis=new Jedis("redis://localhost:6379/9");
         //删除指定数据库
         jedis.flushDB();
+        //jedis.zadd();
+        jedis.lpush("hello","world");
+        long legnth=jedis.lpush("hello","world1");
 
-        jedis.set("hello","world");
-        print(1,jedis.get("hello"));
-        jedis.set("hello","world2");
-        print(2,jedis.get("hello"));
-        //设置有效时间
-        jedis.setex("hello2",5,"world");
-
-        //短时间内大量变化 使用redis
-        jedis.set("pv","100");
-        //加一
-        jedis.incrBy("pv",5);
-        jedis.decrBy("pv",2);
-        jedis.incr("pv");
-
-        //打印所有字符
-        print(3,jedis.keys("*"));
-
-        //重点
-        String listname="list";
-        //删除指定key  不存在则会被忽略掉
-        jedis.del(listname);
-
-        for(int i=0;i<10;i++){
-            jedis.lpush(listname,String.valueOf(i));
-        }
-        //最后进去的元素下标为0
-        print(4,jedis.lrange(listname,0,12));
-        //队列操作
-        print(5,jedis.llen(listname));
-        //弹出最顶后的一个元素
-        print(6,jedis.lpop(listname));
-        print(7,jedis.llen(listname));
-        //指定元素 ，插入元素,查找指定元素
-        print(8,jedis.lindex(listname,3));
-        print(9,jedis.linsert(listname, BinaryClient.LIST_POSITION.AFTER,"4","xx"));
-        print(10,jedis.linsert(listname, BinaryClient.LIST_POSITION.BEFORE,"4","bb"));
-        print(4,jedis.lrange(listname,0,12));
+        print(1,jedis.lpop("hello"));
+//        jedis.set("hello","world2");
+//        print(2,jedis.get("hello"));
+//        //设置有效时间
+//        jedis.setex("hello2",5,"world");
+//
+//        //短时间内大量变化 使用redis
+//        jedis.set("pv","100");
+//        //加一
+//        jedis.incrBy("pv",5);
+//        jedis.decrBy("pv",2);
+//        jedis.incr("pv");
+//
+//        //打印所有字符
+//        print(3,jedis.keys("*"));
+//
+//        //重点
+//        String listname="list";
+//        //删除指定key  不存在则会被忽略掉
+//        jedis.del(listname);
+//
+//        for(int i=0;i<10;i++){
+//            jedis.lpush(listname,String.valueOf(i));
+//        }
+//        //最后进去的元素下标为0
+//        print(4,jedis.lrange(listname,0,12));
+//        //队列操作
+//        print(5,jedis.llen(listname));
+//        //弹出最顶后的一个元素
+//        print(6,jedis.lpop(listname));
+//        print(7,jedis.llen(listname));
+//        //指定元素 ，插入元素,查找指定元素
+//        print(8,jedis.lindex(listname,3));
+//        print(9,jedis.linsert(listname, BinaryClient.LIST_POSITION.AFTER,"4","xx"));
+//        print(10,jedis.linsert(listname, BinaryClient.LIST_POSITION.BEFORE,"4","bb"));
+//        print(4,jedis.lrange(listname,0,12));
     }
 
 
@@ -148,6 +151,36 @@ public class JedisAdapter  implements InitializingBean {
             }
         }
         return null;
+    }
+
+    public Set<String> zrevrange(String key, int start, int end) {
+        Jedis jedis = null;
+        try {
+            jedis = pool.getResource();
+            return jedis.zrevrange(key, start, end);
+        } catch (Exception e) {
+            logger.error("发生异常" + e.getMessage());
+        } finally {
+            if (jedis != null) {
+                jedis.close();
+            }
+        }
+        return null;
+    }
+
+    public double zcard(String key){
+        Jedis jedis=null;
+
+        try {
+            jedis = pool.getResource();
+            return jedis.zcard(key);
+        }catch (Exception e){
+
+        }finally {
+            if(jedis!=null)
+                jedis.close();
+        }
+        return 0;
     }
 
 

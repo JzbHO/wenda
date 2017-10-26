@@ -1,6 +1,7 @@
 package com.nowcoder.service;
 
-import com.nowcoder.dao.QusetionDAO;
+import com.nowcoder.dao.QuestionDAO;
+import com.nowcoder.dao.QuestionDAO;
 import com.nowcoder.model.Question;
 import org.aspectj.weaver.patterns.TypePatternQuestions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,28 +16,12 @@ import java.util.List;
 @Service
 public class QuestionService {
     @Autowired
-    QusetionDAO qusetionDAO;
+    QuestionDAO questionDAO;
 
     public List<Question> getLatestQuestions(int userId,int offset,int n){
-        return qusetionDAO.selectLatestQuestions(userId,offset,n);
+        return questionDAO.selectLatestQuestions(userId,offset,n);
     }
 
-    public int addQuestion (Question question){
-        //html过滤
-        question.setContent(HtmlUtils.htmlEscape(question.getContent()));
-        question.setTitle(HtmlUtils.htmlEscape(question.getTitle()));
-
-        return qusetionDAO.addQuestion(question)>0 ?question.getId():0;
-    }
-
-    public Question getById(int id){
-        return qusetionDAO.getById(id);
-    }
-
-    public int updateCommentCount(int id,int count){
-        return qusetionDAO.updateCommentCount(id,count);
-
-    }
 
 
 

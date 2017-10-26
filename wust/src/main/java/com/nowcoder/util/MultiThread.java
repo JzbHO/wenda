@@ -1,6 +1,6 @@
 package com.nowcoder.util;
 
-import com.nowcoder.async.EventConsumer;
+
 import org.slf4j.LoggerFactory;
 
 import java.util.concurrent.Executor;

@@ -1,22 +1,21 @@
 package com.nowcoder.controller;
 
 import com.nowcoder.model.Question;
+import com.nowcoder.model.ViewObject;
 import com.nowcoder.service.QuestionService;
+
 import com.nowcoder.service.UserService;
-import org.omg.CORBA.Request;
-import org.slf4j.LoggerFactory;
+import org.omg.CORBA.portable.ValueInputStream;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-import java.util.logging.Logger;
 
 /**
  * Created by Administrator on 2017/7/18 0018.
@@ -30,16 +29,32 @@ public class HomeController {
     UserService userService;
 
 
-    @RequestMapping(path = {"/","/index"}, method = {RequestMethod.GET, RequestMethod.POST})
-    public String index(Model model) throws IOException {
-       // List<Question> qustionlist=questionService.getLatestQuestions(0,0,1) ;
-        //model.addAttribute("questions",qustionlist);
-        return "header";
+    @RequestMapping(path={"/index1/{userId}"},method = {RequestMethod.GET})
+    public String index1(Model model, @PathVariable("userId") int userId){
+        List<ViewObject> vos=getLatestQuestions(userId,0,5);
+        model.addAttribute("vos",vos);
+        return "index";
     }
-//    @RequestMapping(path={"/","/index"},method = {RequestMethod.GET})
-//    public String index(HttpSession httpSession){
-//        return "index";
-//    }
+
+    @RequestMapping(path={"/index"},method = {RequestMethod.GET})
+    public String index(Model model){
+        List<ViewObject> vos=getLatestQuestions(0,0,5);
+        model.addAttribute("vos",vos);
+        return "index";
+    }
+    private List<ViewObject> getLatestQuestions(int id,int offset,int num){
+        List<Question> list=questionService.getLatestQuestions(id,0,10);
+        List<ViewObject> vos=new ArrayList<ViewObject>();
+        for(Question question:list){
+            ViewObject vo=new ViewObject();
+            vo.set("question",question);
+            vo.set("user",userService.getUser(question.getUserId()));
+            vos.add(vo);
+        }
+        return vos;
+    }
+
+
 
 
 }
