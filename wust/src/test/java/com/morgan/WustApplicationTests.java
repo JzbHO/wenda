@@ -1,6 +1,10 @@
 package com.morgan;
 import com.morgan.dao.QuestionDAO;
 import com.morgan.dao.UserDAO;
+import com.morgan.model.Comment;
+import com.morgan.model.EntityType;
+import com.morgan.service.CommentService;
+import com.morgan.service.MessageService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +12,7 @@ import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
+import java.util.List;
 import java.util.Random;
 
 
@@ -21,21 +26,16 @@ public class WustApplicationTests {
 	@Autowired
     QuestionDAO questionDAO;
 
+	@Autowired
+	CommentService commentService;
+
+	@Autowired
+	MessageService messageService;
+
 	@Test
 	public void contextLoads() {
-	    System.out.print("1");
-		Random random=new Random();
-//		for(int i=1;i<20;i++){
-//		    Question question=new Question();
-//		    question.setTitle(String.format("Q%d",i));
-//		    question.setContent("小明");
-//		    question.setUserId(1);
-//		    question.setCommentCount(1);
-//		    question.setCreatedDate(new Date());
-//		    questionDAO.addQuestion(question);
-//		}
-		questionDAO.selectLatestQuestions(1,0,2);
-
+		List<Comment> list=commentService.getComment(20,EntityType.ENTITY_QUESTION);
+		messageService.getAllconversation(1,0,1);
 
 
 

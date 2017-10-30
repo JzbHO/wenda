@@ -7,12 +7,15 @@ import java.util.Map;
  * Created by Administrator on 2017/10/26 0026.
  */
 public class ViewObject {
-    private Map map=new HashMap<Object,Object>();
+    private Map<String,Object> objs=new HashMap<String,Object>();
 
-    public void set(String str,Object object){
-        map.put(str,object);
-
+    public void set(String key,Object value){
+        objs.put(key,value);
     }
+    public Object get(String key){
+        return objs.get(key);
+    }
+
 
 
 

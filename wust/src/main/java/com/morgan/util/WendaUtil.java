@@ -14,6 +14,14 @@ public class WendaUtil {
     private static final Logger logger = LoggerFactory.getLogger(WendaUtil.class);
 
     public static final int ANYMOUSUSER_ID=3;
+    public static final int COMMENT_EFFICIENT=1;
+    public static final int COMMENT_INVALID=0;
+    public static final int MESSAGE_HASREAD=1;
+    public static final int COMMENT_NOREAD=0;
+
+
+
+
 
 
 

@@ -19,14 +19,16 @@ public interface QuestionDAO {
     int addQuestion(Question question);
 
     @Select({"select "+SELECT_FILEDS+ " from "+TABLE_NAME+"where id=#{id}"})
-    Question selectQuestion(int id);
+    Question selectQuestion(@Param("id") int id);
 
     List<Question> selectLatestQuestions(@Param("userId") int userId,
                                          @Param("offset")int offset,
                                          @Param("limit")int limit);
 
     @Delete({"delete from "+TABLE_NAME+"where id=#{id}"})
-    int deleteQuestion(int id);
+    int deleteQuestion(@Param("id") int id);
 
+    @Update({"update ", TABLE_NAME, " set comment_count=#{commentCount} where id=#{questionId}"})
+    int updateQuestion(@Param("questionId")int questionId,@Param("commentCount") int commentCount);
 
 }

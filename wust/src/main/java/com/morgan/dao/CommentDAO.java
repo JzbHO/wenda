@@ -12,11 +12,11 @@ import java.util.List;
 public interface CommentDAO {
     //更新 或者删除成功都返回>0
     String TABLE_NAME = " comment ";
-    String INSERT_FIELDS = " content,user_id, created_date, entity_id, entity_type,status  ";
+    String INSERT_FIELDS = "content,user_id,created_date,entity_id,entity_type,status";
     String SELECT_FIELDS = " id, " + INSERT_FIELDS;
 
     //#表示与User类中的属性相匹配
-    @Insert({"insert into ", TABLE_NAME,"(", INSERT_FIELDS ,") values (#{content},#{userId},#{createdDate},#{entityId},#{entityType}.#{status)"})
+    @Insert({"insert into ", TABLE_NAME,"(", INSERT_FIELDS ,") values (#{content},#{userId},#{createdDate},#{entityId},#{entityType},#{status})"})
     int addComment(Comment comment);
 
     //选取类型所有评论

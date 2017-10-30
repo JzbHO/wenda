@@ -1,14 +1,22 @@
 package com.morgan.controller;
 
+import com.morgan.model.Comment;
+import com.morgan.model.EntityType;
 import com.morgan.model.HostHolder;
 import com.morgan.model.Question;
+import com.morgan.service.CommentService;
 import com.morgan.service.QuestionService;
+import com.morgan.service.UserService;
+import com.morgan.util.ViewObject;
 import com.morgan.util.WendaUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by Administrator on 2017/10/27 0027.
@@ -20,6 +28,12 @@ public class QuestionController {
     QuestionService questionService;
 
     @Autowired
+    CommentService commentService;
+
+    @Autowired
+    UserService userService;
+
+    @Autowired
     HostHolder hostHolder;
     @RequestMapping(path={"/question/add"},method = {RequestMethod.POST})
     @ResponseBody
@@ -29,21 +43,34 @@ public class QuestionController {
         question.setContent(content);
         question.setCreatedDate(new Date());
         question.setTitle(title);
-
         if(hostHolder.getUser()!=null) {
             question.setUserId(hostHolder.getUser().getId());
         }else {
             return WendaUtil.toJsonString(999,"");
         }
-
         if(questionService.addQuestion(question)>0){
             return WendaUtil.toJsonString(0);
         }else {
             return WendaUtil.toJsonString(1,"失败");
         }
+    }
+    @RequestMapping(value = "/question/{qid}", method = {RequestMethod.GET})
+    public String questionDetail(Model model, @PathVariable("qid") int qid) {
+        Question question = questionService.getById(qid);
+        model.addAttribute("question", question);
+        List<Comment> list=commentService.getComment(qid,EntityType.ENTITY_QUESTION);
 
-
+        List<ViewObject> vos=new ArrayList<>();
+        for(Comment comment:list){
+            ViewObject vo=new ViewObject();
+            vo.set("comment",comment);
+            vo.set("user",userService.getUser(question.getUserId()));
+            vos.add(vo);
+        }
+        model.addAttribute("comments",vos);
+        return "detail";
 
     }
+
 
 }

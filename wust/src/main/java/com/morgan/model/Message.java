@@ -63,10 +63,17 @@ public class Message {
         this.hasRead = hasRead;
     }
 
-    public String getConversationId() {
+    public void setConversationId() {
         if (fromId < toId) {
-            return String.format("%d_%d", fromId, toId);
+            this.conversationId=String.format("%d_%d", fromId, toId);
+
+        }else {
+            this.conversationId=String.format("%d_%d", toId, fromId);
         }
-        return String.format("%d_%d", toId, fromId);
+
+    }
+
+    public String getConversationId() {
+        return conversationId;
     }
 }

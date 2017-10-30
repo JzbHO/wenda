@@ -24,6 +24,12 @@ public class QuestionService {
     }
 
 
+    public Question getById(int questionId){
+        return questionDAO.selectQuestion(questionId);
+    }
+
+
+
     public int addQuestion(Question question) {
         question.setTitle(HtmlUtils.htmlEscape(question.getTitle()));
         question.setContent(HtmlUtils.htmlEscape(question.getContent()));
@@ -32,5 +38,9 @@ public class QuestionService {
         question.setContent(mySensitiveService.filter(question.getContent()));
 
         return questionDAO.addQuestion(question);
+    }
+
+    public int updateQuestionComment(int questionId, int count) {
+            return questionDAO.updateQuestion(questionId,count);
     }
 }

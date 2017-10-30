@@ -28,12 +28,13 @@ public class LoginController {
     @Autowired
     LoginTicketService loginTicketService;
 
-    @RequestMapping(path={"/repage"},method = {RequestMethod.GET})
+    @RequestMapping(path={"/reglogin"},method = {RequestMethod.GET})
     public String reg(Model model,
                       @RequestParam(value="next",required = false) String next ) {
         model.addAttribute("next",next);
         return "login";
     }
+
 
     @RequestMapping(path={"/reg/"},method = {RequestMethod.POST})
     public String reg(HttpServletResponse response, Model model,
