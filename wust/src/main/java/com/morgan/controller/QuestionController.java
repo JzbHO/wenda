@@ -71,9 +71,9 @@ public class QuestionController {
             ViewObject vo=new ViewObject();
             vo.set("comment",comment);
             if(hostHolder.getUser()==null){
-                vo.set("like",0);
+                vo.set("liked",0);
             }else {
-                vo.set("like",likeService.getLikeStatus(hostHolder.getUser().getId(),EntityType.ENTITY_QUESTION,qid));
+                vo.set("liked",likeService.getLikeStatus(hostHolder.getUser().getId(),EntityType.ENTITY_QUESTION,qid));
             }
 
             vo.set("likeCount",likeService.getLikeCount(EntityType.ENTITY_QUESTION,qid));

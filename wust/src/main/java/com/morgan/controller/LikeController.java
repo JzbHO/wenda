@@ -1,5 +1,8 @@
 package com.morgan.controller;
 
+import com.morgan.async.EventModel;
+import com.morgan.async.EventProducer;
+import com.morgan.async.EventType;
 import com.morgan.model.Comment;
 import com.morgan.model.EntityType;
 import com.morgan.model.HostHolder;
@@ -24,14 +27,20 @@ public class LikeController {
 
     @Autowired
     HostHolder hostHolder;
+
+    @Autowired
+    EventProducer eventProducer;
     @RequestMapping(path = {"/like"}, method = {RequestMethod.POST})
     @ResponseBody
     public String like(@RequestParam("commentId") int commentId) {
         if(hostHolder==null){
             return WendaUtil.toJsonString(999);
         }
-        long likeCount=likeService.like(hostHolder.getUser().getId(), EntityType.ENTITY_QUESTION,commentId);
-        return WendaUtil.toJsonString(0,String.valueOf(likeCount));
+        EventModel eventModel=new EventModel();
+        eventModel.setActorId(hostHolder.getUser().getId()).setEntityId(commentId).setEntityType(EntityType.ENTITY_COMMENT)
+        .setType(EventType.LIKE);
+        eventProducer.fireEvent(eventModel);
+        return WendaUtil.toJsonString(0,String.valueOf(likeService.getLikeCount(EntityType.ENTITY_COMMENT,commentId)));
     }
 
     @RequestMapping(path = {"/dislike"}, method = {RequestMethod.POST})
