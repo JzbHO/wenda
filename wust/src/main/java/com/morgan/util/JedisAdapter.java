@@ -4,10 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.stereotype.Service;
-import redis.clients.jedis.BinaryClient;
-import redis.clients.jedis.Jedis;
-import redis.clients.jedis.JedisPool;
-import redis.clients.jedis.Tuple;
+import redis.clients.jedis.*;
 
 import java.util.List;
 import java.util.Set;
@@ -163,6 +160,20 @@ public class JedisAdapter  implements InitializingBean {
         }
         return 0;
      }
+    public List<String> lrange(String key,int begin,int end){
+        Jedis jedis=null;
+        try{
+            jedis=pool.getResource();
+            return jedis.lrange(key,begin,end);
+        }catch (Exception e){
+            logger.error("发生异常"+e.getMessage());
+        }finally {
+            if(jedis!=null) {
+                jedis.close();
+            }
+        }
+        return null;
+    }
     public long srem(String key,String value){
         Jedis jedis=null;
         try{
@@ -176,6 +187,20 @@ public class JedisAdapter  implements InitializingBean {
             }
         }
         return 0;
+    }
+    public Double zscore(String key,String memver){
+        Jedis jedis=null;
+        try{
+            jedis=pool.getResource();
+            return jedis.zscore(key,memver);
+        }catch (Exception e){
+            logger.error("发生异常"+e.getMessage());
+        }finally {
+            if(jedis!=null) {
+                jedis.close();
+            }
+        }
+        return null;
     }
     public long scard(String key){
         Jedis jedis=null;
@@ -221,7 +246,35 @@ public class JedisAdapter  implements InitializingBean {
         }
         return null;
     }
+    public Set<String> zrevrange(String key,int offset,int count){
+        Jedis jedis=null;
+        try{
+            jedis=pool.getResource();
+            return jedis.zrevrange(key,offset,count);
+        }catch (Exception e){
+            logger.error("发生异常"+e.getMessage());
+        }finally {
+            if(jedis!=null) {
+                jedis.close();
+            }
+        }
+        return null;
+    }
 
+    public Long zcard(String key){
+        Jedis jedis=null;
+        try{
+            jedis=pool.getResource();
+            return jedis.zcard(key);
+        }catch (Exception e){
+            logger.error("发生异常"+e.getMessage());
+        }finally {
+            if(jedis!=null) {
+                jedis.close();
+            }
+        }
+        return null;
+    }
     public long lpush(String key,String value){
         Jedis jedis=null;
         try{
@@ -235,6 +288,36 @@ public class JedisAdapter  implements InitializingBean {
             }
         }
         return 1;
+    }
+
+    public Jedis getResource(){
+        return pool.getResource();
+    }
+    public Transaction multi(Jedis jedis){
+        try{
+            return jedis.multi();
+        }catch (Exception e){
+            logger.error("事务获取发生异常"+e.getMessage());
+        }finally {
+
+        }
+        return null;
+
+    }
+
+
+    public List<Object> exec(Transaction ex,Jedis jedis){
+        try{
+            return ex.exec();
+        }catch (Exception e){
+            logger.error("发生异常"+e.getMessage());
+            ex.discard();
+        }finally {
+            if(jedis!=null){
+                jedis.close();
+            }
+        }
+        return null;
     }
 
 

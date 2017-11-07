@@ -1,5 +1,7 @@
 package com.morgan.model;
 
+import com.morgan.util.TimeLineType;
+
 import java.util.Date;
 
 /**
@@ -7,7 +9,7 @@ import java.util.Date;
  */
 public class Feed {
     private int id;
-    private int type;
+    private TimeLineType type;  //不同类型渲染界面不一样
     private int userId;
     private Date createDate;
     private String data;
@@ -20,11 +22,11 @@ public class Feed {
         this.id = id;
     }
 
-    public int getType() {
+    public TimeLineType getType() {
         return type;
     }
 
-    public void setType(int type) {
+    public void setType(TimeLineType type) {
         this.type = type;
     }
 

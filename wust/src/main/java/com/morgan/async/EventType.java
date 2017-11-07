@@ -7,7 +7,8 @@ public enum  EventType {
     LIKE(),
     COMMENT(),
     LOGIN(),
-    MAIL();
+    MAIL(),
+
 
     EventType(){}
 
