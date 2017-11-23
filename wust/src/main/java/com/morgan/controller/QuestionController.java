@@ -55,7 +55,7 @@ public class QuestionController {
             return WendaUtil.toJsonString(999,"");
         }
         if(questionService.addQuestion(question)>0){
-            return WendaUtil.toJsonString(0);
+            return WendaUtil.toJsonString(0,"");
         }else {
             return WendaUtil.toJsonString(1,"失败");
         }

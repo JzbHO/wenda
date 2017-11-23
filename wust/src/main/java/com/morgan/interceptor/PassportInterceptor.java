@@ -23,9 +23,11 @@ public class PassportInterceptor implements HandlerInterceptor{
 
     @Override
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o) throws Exception {
-//            if(hostHolder.getUser()==null) {
-//                httpServletResponse.sendRedirect("/repage?next="+httpServletRequest.getRequestURI());
-//            }
+            if(hostHolder.getUser()==null) {
+                httpServletResponse.sendRedirect("/reglogin");
+            }else {
+                httpServletResponse.sendRedirect("/");
+            }
         return true;
     }
 

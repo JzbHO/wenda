@@ -17,8 +17,8 @@ public interface FeedDAO {
 
 
 
-    @Select({"select",SELECT_FIELDS,"from",TABLE_NAME,"where id=#{entityId} and "+
-            "entity_type=#{entityType}"})
+//    @Select({"select",SELECT_FIELDS,"from",TABLE_NAME,"where id=#{entityId} and "+
+//            "entity_type=#{entityType}"})
 
     List<Feed> selectUserFeeds(@Param("maxId") int maxId,
                                @Param("userIds") List<Integer> userIds,
