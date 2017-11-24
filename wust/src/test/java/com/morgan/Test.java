@@ -1,5 +1,6 @@
 package com.morgan;
 
+import com.morgan.util.JedisAdapter;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
@@ -137,10 +138,7 @@ public class Test {
 
         }
         public  static  void main(String []args){
-           // testExecutor();
-            //blockQueue();
-            //mutilThread();
-            testFuture();
+
         }
 
 

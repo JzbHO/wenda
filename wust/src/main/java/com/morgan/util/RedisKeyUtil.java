@@ -16,6 +16,8 @@ public class RedisKeyUtil {
 
 
 
+
+
     public static String getFollowKey(int userId,int entityType){
             return BIZ_FOCUS+String.valueOf(userId)+SPLIT+entityType;
     }

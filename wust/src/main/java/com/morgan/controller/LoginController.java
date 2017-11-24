@@ -1,5 +1,6 @@
 package com.morgan.controller;
 
+import com.morgan.service.LogService;
 import com.morgan.service.LoginTicketService;
 import com.morgan.service.UserService;
 import org.apache.ibatis.annotations.Param;
@@ -28,6 +29,8 @@ public class LoginController {
     @Autowired
     LoginTicketService loginTicketService;
 
+    @Autowired
+    LogService logService;
     @RequestMapping(path={"/reglogin"},method = {RequestMethod.GET})
     public String reg(Model model,
                       @RequestParam(value="next",required = false) String next ) {
@@ -74,6 +77,7 @@ public class LoginController {
                 Cookie cookie = new Cookie("ticket",map.get("ticket").toString());
                 cookie.setPath("/");
                 response.addCookie(cookie);
+                logService.addLoginLog((Integer) map.get("userId"));
                 if(next!=null){
                     return "redirect:/";
                 }else {

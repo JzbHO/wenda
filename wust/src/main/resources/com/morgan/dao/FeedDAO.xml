@@ -11,16 +11,14 @@
         FROM
         <include refid="table"/>
 
-        where id &lt; #{maxId}
-
         <if test="userIds.size() != 0">
-            and user_id in
+             user_id in
             <foreach  item="item" collection="userIds" index="index"
                       open="(" separator="," close=")">
                 #{item}
             </foreach>
         </if>
         ORDER BY id DESC
-        LIMIT #{limit}
+        #{offset} LIMIT #{limit}
     </select>
 </mapper>

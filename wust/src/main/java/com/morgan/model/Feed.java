@@ -1,5 +1,7 @@
 package com.morgan.model;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.morgan.util.TimeLineType;
 
 import java.util.Date;
@@ -13,6 +15,15 @@ public class Feed {
     private int userId;
     private Date createDate;
     private String data;
+    private JSONObject jsonObject;
+
+    public JSONObject getJsonObject() {
+        return jsonObject;
+    }
+
+    public void setJsonObject(JSONObject jsonObject) {
+        this.jsonObject = JSON.parseObject(data);
+    }
 
     public int getId() {
         return id;

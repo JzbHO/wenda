@@ -1,7 +1,9 @@
 package com.morgan.service;
 
+import com.morgan.dao.LoginLogDAO;
 import com.morgan.dao.LoginTicketDAO;
 import com.morgan.dao.UserDAO;
+import com.morgan.model.LoginLog;
 import com.morgan.model.LoginTicket;
 import com.morgan.model.User;
 import com.morgan.util.WendaUtil;
@@ -23,6 +25,22 @@ public class UserService {
 
     @Autowired
     LoginTicketDAO loginTicketDAO;
+
+    @Autowired
+    LoginLogDAO loginLogDAO;
+
+    public boolean isActivity(int userId){
+        LoginLog loginLog=loginLogDAO.selecLastLoginLog(userId);
+        if(loginLog==null){
+            return false;
+        }
+        Date date=loginLog.getLoginDate();
+        //如果七天内没有登录则不是活跃用户
+        if((date.getTime()+1000*7*24*60*60)<(new Date().getTime())){
+            return false;
+        }
+        return true;
+    }
 
     public User getUser(int id){
         return userDAO.selectUser(id);
@@ -70,10 +88,12 @@ public class UserService {
         if(null==user){
             map.put("msg","用户名不存在");
         }else {
+            map.put("userId",user.getId());
             if(!WendaUtil.MD5(password+user.getSalt()).equals(user.getPassword())) {
                 map.put("msg", "密码错误");
             }
         }
+
         map.put("ticket",addTicket(username).getTicket());
         return  map;
     }

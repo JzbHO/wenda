@@ -246,11 +246,11 @@ public class JedisAdapter  implements InitializingBean {
         }
         return null;
     }
-    public Set<String> zrevrange(String key,int offset,int count){
+    public Set<String> zrevrange(String key,int start,int end){
         Jedis jedis=null;
         try{
             jedis=pool.getResource();
-            return jedis.zrevrange(key,offset,count);
+            return jedis.zrevrange(key,start,end);
         }catch (Exception e){
             logger.error("发生异常"+e.getMessage());
         }finally {

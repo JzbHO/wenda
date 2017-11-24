@@ -5,6 +5,7 @@ import com.morgan.model.Comment;
 import com.morgan.model.EntityType;
 import com.morgan.service.CommentService;
 import com.morgan.service.MessageService;
+import com.morgan.util.JedisAdapter;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,11 +33,13 @@ public class WustApplicationTests {
 	@Autowired
 	MessageService messageService;
 
+	@Autowired
+	JedisAdapter jedisAdapter;
 	@Test
 	public void contextLoads() {
-		List<Comment> list=commentService.getComment(20,EntityType.ENTITY_QUESTION);
-		messageService.getAllconversation(1,0,1);
 
+		jedisAdapter.lpush("wust","1");
+		System.out.print(jedisAdapter.brpop(0,"wust").toString());
 
 
 

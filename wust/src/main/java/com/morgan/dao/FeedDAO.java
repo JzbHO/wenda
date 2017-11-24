@@ -20,7 +20,7 @@ public interface FeedDAO {
 //    @Select({"select",SELECT_FIELDS,"from",TABLE_NAME,"where id=#{entityId} and "+
 //            "entity_type=#{entityType}"})
 
-    List<Feed> selectUserFeeds(@Param("maxId") int maxId,
+    List<Feed> selectUserFeeds(@Param("offset") int offset,
                                @Param("userIds") List<Integer> userIds,
                                @Param("count") int count);
 
