@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,6 +47,7 @@ public class HomeController {
     @RequestMapping(path={"/index1/{userId}"},method = {RequestMethod.GET})
     public String index1(Model model, @PathVariable("userId") int userId){
         List<Object> vos=new ArrayList<Object>();
+        //是否时活跃用户
         if(userService.isActivity(userId)){
             //push新消息
             List<String >list=null;
@@ -69,8 +71,9 @@ public class HomeController {
     }
 
     @RequestMapping(path={"/index","/"},method = {RequestMethod.GET})
-    public String index(Model model){
-        List<ViewObject> vos=getLatestQuestions(3,0,5);
+    public String index(Model model, HttpSession session){
+        session.setAttribute("1","1");
+        List<ViewObject> vos=getLatestQuestions(85212,0,5);
         model.addAttribute("vos",vos);
         return "index";
     }
