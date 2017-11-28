@@ -77,7 +77,7 @@ public class LoginController {
                 Cookie cookie = new Cookie("ticket",map.get("ticket").toString());
                 cookie.setPath("/");
                 response.addCookie(cookie);
-                logService.addLoginLog((Integer) map.get("userId"));
+               logService.addLoginLog((Integer) map.get("userId"));
                 if(next!=null){
                     return "redirect:/";
                 }else {

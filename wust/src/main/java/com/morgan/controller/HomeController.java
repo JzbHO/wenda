@@ -67,12 +67,11 @@ public class HomeController {
            }
         }
         model.addAttribute("vos",vos);
-        return "redirect:/";
+        return "index";
     }
 
     @RequestMapping(path={"/index","/"},method = {RequestMethod.GET})
     public String index(Model model, HttpSession session){
-        session.setAttribute("1","1");
         List<ViewObject> vos=getLatestQuestions(85212,0,5);
         model.addAttribute("vos",vos);
         return "index";

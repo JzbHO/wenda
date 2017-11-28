@@ -1,9 +1,12 @@
 package com.morgan.interceptor;
 
+import com.morgan.controller.LoginController;
 import com.morgan.dao.LoginTicketDAO;
 import com.morgan.dao.UserDAO;
 import com.morgan.model.HostHolder;
 import com.morgan.model.LoginTicket;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -19,6 +22,8 @@ import java.util.Date;
  */
 @Component
 public class LoginRequiredInterceptor implements HandlerInterceptor {
+
+    private static final Logger logger = LoggerFactory.getLogger(LoginRequiredInterceptor.class);
     @Autowired
     LoginTicketDAO loginTicketDAO;
 
@@ -44,10 +49,13 @@ public class LoginRequiredInterceptor implements HandlerInterceptor {
             LoginTicket logT=loginTicketDAO.selectByTicket(loginTicket);
             if(logT!=null&&logT.getStatus()==0&&logT.getExpired().after(new Date())){
                 int userId=logT.getUserId();
+                logger.info(userId+"userId------------");
                 hostHolder.setUser(userDAO.selectUser(userId));
+                logger.info(hostHolder.getUser()+"------------");
                 return true;
             }
         }
+
         return true;
 
     }

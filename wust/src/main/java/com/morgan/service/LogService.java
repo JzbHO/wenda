@@ -1,6 +1,7 @@
 package com.morgan.service;
 
 import com.morgan.dao.LoginLogDAO;
+import com.morgan.model.LoginLog;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +16,10 @@ public class LogService {
     LoginLogDAO loginLogDAO;
 
     public void addLoginLog(int userId){
-        loginLogDAO.addLoginLog(new Date(),userId);
+        LoginLog loginLog=new LoginLog();
+        loginLog.setLoginDate(new Date());
+        loginLog.setUserId(userId);
+        loginLogDAO.addLoginLog(loginLog);
     }
 
 
