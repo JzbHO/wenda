@@ -68,13 +68,13 @@ public class FollowService {
     }
 
     //某实体的粉丝
-    public ArrayList<Integer> getFolloweesList(int userId,int entityType,int offset,int count){
-        String follweekey=RedisKeyUtil.getFollowByKey(entityType,userId);
+    public ArrayList<Integer> getFolloweesList(int enetityId,int entityType,int offset,int count){
+        String follweekey=RedisKeyUtil.getFollowByKey(entityType,enetityId);
         return trans(jedisAdapter.zrevrange(follweekey,offset,count));
     }
-    public ArrayList<Integer> getFolloweesList(int userId,int entityType,int count){
-        String follwekeey=RedisKeyUtil.getFollowKey(entityType,userId);
-        return trans(jedisAdapter.zrevrange(follwekeey,0,count));
+    public ArrayList<Integer> getFolloweesList(int enetityId,int entityType){
+        String follwekeey=RedisKeyUtil.getFollowKey(entityType,enetityId);
+        return trans(jedisAdapter.zrevrange(follwekeey,0,-1));
     }
 
     public Long getFollowCount(int userId,int entityType){

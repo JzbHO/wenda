@@ -18,10 +18,14 @@ public class LikeHandler implements EventHandler {
     @Autowired
     LikeService likeService;
 
+//    @Override
+//    public void doHandle(EventModel eventModel) {
+//        likeService.like(eventModel.getActorId(),eventModel.getEntityType(),eventModel.getEntityId());
+//    }
     @Override
     public void doHandle(EventModel eventModel) {
-        likeService.like(eventModel.getActorId(),eventModel.getEntityType(),eventModel.getEntityId());
- }
+        likeService.like(eventModel.getUserId(),eventModel.getEntityType(),eventModel.getEneityId());
+    }
 
     @Override
     public List<EventType> getSupportEventTypes() {

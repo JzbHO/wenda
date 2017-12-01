@@ -1,5 +1,6 @@
 package com.morgan.controller;
 
+import com.morgan.async.EventHandler;
 import com.morgan.async.EventModel;
 import com.morgan.async.EventProducer;
 import com.morgan.async.EventType;
@@ -40,14 +41,21 @@ public class LikeController {
             return WendaUtil.toJsonString(999);
         }
         EventModel eventModel=new EventModel();
-        Feed feed=new Feed();
-        feed.setUserId(hostHolder.getUser().getId());
-        feed.setType(TimeLineType.LIKE);
-        feed.setCreateDate(new Date());
-        feed.setData("123");
-        eventModel.setActorId(hostHolder.getUser().getId()).setEntityId(commentId).setEntityType(EntityType.ENTITY_COMMENT)
-        .setType(EventType.LIKE).setExts("feed",feed);
-        eventProducer.fireEvent(eventModel);
+        eventModel.setEntityType(EntityType.ENTITY_COMMENT);
+        eventModel.setEneityId(commentId);
+        eventModel.setUserId(hostHolder.getUser().getId());
+        eventModel.setEventType(EventType.LIKE);
+        eventProducer.pushEvent(eventModel);
+
+//        EventModel eventModel=new EventModel();
+//        Feed feed=new Feed();
+//        feed.setUserId(hostHolder.getUser().getId());
+//        feed.setType(TimeLineType.LIKE);
+//        feed.setCreateDate(new Date());
+//        feed.setData("123");
+//        eventModel.setActorId(hostHolder.getUser().getId()).setEntityId(commentId).setEntityType(EntityType.ENTITY_COMMENT)
+//        .setType(EventType.LIKE).setExts("feed",feed);
+//        eventProducer.fireEvent(eventModel);
 
 
 

@@ -44,6 +44,7 @@ public class HomeController {
     FollowService followService;
 
 
+
     @RequestMapping(path={"/index1/{userId}"},method = {RequestMethod.GET})
     public String index1(Model model, @PathVariable("userId") int userId){
         List<Object> vos=new ArrayList<Object>();
@@ -86,6 +87,7 @@ public class HomeController {
             ViewObject vo=new ViewObject();
             vo.set("question",question);
             vo.set("user",userService.getUser(question.getUserId()));
+            vo.set("followCount",jedisAdapter.zcard(RedisKeyUtil.getLikeKey(EntityType.ENTITY_QUESTION,question.getId())));
             vos.add(vo);
         }
         return vos;

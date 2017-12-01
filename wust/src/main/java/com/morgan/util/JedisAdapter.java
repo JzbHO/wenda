@@ -236,7 +236,7 @@ public class JedisAdapter  implements InitializingBean {
         Jedis jedis=null;
         try{
             jedis=pool.getResource();
-            return jedis.brpop(0,key);
+            return jedis.blpop(0,key);
         }catch (Exception e){
             logger.error("发生异常"+e.getMessage());
         }finally {

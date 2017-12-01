@@ -4,10 +4,7 @@ import com.morgan.model.Comment;
 import com.morgan.model.EntityType;
 import com.morgan.model.HostHolder;
 import com.morgan.model.Question;
-import com.morgan.service.CommentService;
-import com.morgan.service.LikeService;
-import com.morgan.service.QuestionService;
-import com.morgan.service.UserService;
+import com.morgan.service.*;
 import com.morgan.util.ViewObject;
 import com.morgan.util.WendaUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +34,9 @@ public class QuestionController {
     @Autowired
     LikeService likeService;
 
+    @Autowired
+    FollowService followService;
+
 
 
     @Autowired
@@ -64,6 +64,9 @@ public class QuestionController {
     public String questionDetail(Model model, @PathVariable("qid") int qid) {
         Question question = questionService.getById(qid);
         model.addAttribute("question", question);
+        int followSize=followService.getFolloweesList(EntityType.ENTITY_QUESTION,qid).size();
+        model.addAttribute("followSize",followSize);
+
         List<Comment> list=commentService.getComment(qid,EntityType.ENTITY_QUESTION);
 
         List<ViewObject> vos=new ArrayList<>();
@@ -76,7 +79,7 @@ public class QuestionController {
                 vo.set("liked",likeService.getLikeStatus(hostHolder.getUser().getId(),EntityType.ENTITY_QUESTION,qid));
             }
 
-            vo.set("likeCount",likeService.getLikeCount(EntityType.ENTITY_QUESTION,qid));
+            vo.set("likeCount",likeService.getLikeCount(EntityType.ENTITY_COMMENT,comment.getId()));
             vo.set("user",userService.getUser(question.getUserId()));
             vos.add(vo);
         }

@@ -1,62 +1,116 @@
 package com.morgan.async;
 
-import org.apache.ibatis.ognl.ObjectElementsAccessor;
 
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Created by Administrator on 2017/9/29 0029.
- */
-public class EventModel {
-    private EventType type;
-    private int actorId;
+public class EventModel{
+    private EventType eventType;
+    private int userId;
+    private int eneityId;
     private int entityType;
-    private int entityId;
-    private Map<String,Object> exts=new HashMap<>();
+    private Map<String,Object> map=new HashMap<>();
 
-    public EventType getType() {
-        return type;
+    public EventType getEventType() {
+        return eventType;
     }
 
-    public EventModel setType(EventType type) {
-        this.type = type;
-        return this;
+    public void setEventType(EventType eventType) {
+        this.eventType = eventType;
     }
 
-    public int getActorId() {
-        return actorId;
+    public int getUserId() {
+        return userId;
     }
 
-    public EventModel setActorId(int actorId) {
-        this.actorId = actorId;
-        return this;
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
+    public int getEneityId() {
+        return eneityId;
+    }
+
+    public void setEneityId(int eneityId) {
+        this.eneityId = eneityId;
     }
 
     public int getEntityType() {
         return entityType;
     }
 
-    public EventModel setEntityType(int entityType) {
+    public void setEntityType(int entityType) {
         this.entityType = entityType;
-        return this;
     }
 
-    public int getEntityId() {
-        return entityId;
+    public Map<String, Object> getMap() {
+        return map;
     }
 
-    public EventModel setEntityId(int entityId) {
-        this.entityId = entityId;
-        return this;
-    }
-
-    public Map<String, Object> getExts() {
-        return exts;
-    }
-
-    public EventModel setExts(String key, Object value) {
-        this.exts.put(key,value);
-        return this;
+    public void setMap(Map<String, Object> map) {
+        this.map = map;
     }
 }
+
+
+
+//import org.apache.ibatis.ognl.ObjectElementsAccessor;
+//
+//import java.util.HashMap;
+//import java.util.Map;
+//
+///**
+// * Created by Administrator on 2017/9/29 0029.
+// */
+//public class EventModel {
+//    private EventType type;
+//    private int actorId;
+//    private int entityType;
+//    private int entityId;
+//    private Map<String,Object> exts=new HashMap<>();
+//
+//    public EventType getType() {
+//        return type;
+//    }
+//
+//    public EventModel setType(EventType type) {
+//        this.type = type;
+//        return this;
+//    }
+//
+//    public int getActorId() {
+//        return actorId;
+//    }
+//
+//    public EventModel setActorId(int actorId) {
+//        this.actorId = actorId;
+//        return this;
+//    }
+//
+//    public int getEntityType() {
+//        return entityType;
+//    }
+//
+//    public EventModel setEntityType(int entityType) {
+//        this.entityType = entityType;
+//        return this;
+//    }
+//
+//    public int getEntityId() {
+//        return entityId;
+//    }
+//
+//    public EventModel setEntityId(int entityId) {
+//        this.entityId = entityId;
+//        return this;
+//    }
+//
+//    public Map<String, Object> getExts() {
+//        return exts;
+//    }
+//
+//    public EventModel setExts(String key, Object value) {
+//        this.exts.put(key,value);
+//        return this;
+//    }
+//}
