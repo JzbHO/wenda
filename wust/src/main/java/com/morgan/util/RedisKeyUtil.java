@@ -22,6 +22,7 @@ public class RedisKeyUtil {
             return BIZ_FOCUS+String.valueOf(userId)+SPLIT+entityType;
     }
 
+    //获取粉丝
     public static String getFollowByKey(int entityType,int entityId){
         return BIZ_FOCUSBY+String.valueOf(entityType)+SPLIT+String.valueOf(entityId);
     }

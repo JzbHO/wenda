@@ -76,11 +76,13 @@ public class FollowService {
         String follwekeey=RedisKeyUtil.getFollowKey(entityType,enetityId);
         return trans(jedisAdapter.zrevrange(follwekeey,0,-1));
     }
-
-    public Long getFollowCount(int userId,int entityType){
-        String follwekey=RedisKeyUtil.getFollowKey(userId,entityType);
+    //获取关注数量
+    public Long getFolloweeCount(int entityType,int entityId){
+        String follwekey=RedisKeyUtil.getFollowByKey(entityType,entityId);
         return jedisAdapter.zcard(follwekey);
     }
+
+
 
     public boolean isFollow(int userId,int entityType,int entityId){
         String follwedkey=RedisKeyUtil.getFollowByKey(entityId,entityType);

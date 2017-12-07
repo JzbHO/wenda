@@ -7,6 +7,9 @@ import com.morgan.model.Question;
 import com.morgan.service.*;
 import com.morgan.util.ViewObject;
 import com.morgan.util.WendaUtil;
+import org.apache.ibatis.annotations.Param;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -37,10 +40,13 @@ public class QuestionController {
     @Autowired
     FollowService followService;
 
-
+    @Autowired
+    SearchService searchService;
 
     @Autowired
     HostHolder hostHolder;
+    private static final Logger logger=LoggerFactory.getLogger(QuestionController.class);
+
     @RequestMapping(path={"/question/add"},method = {RequestMethod.POST})
     @ResponseBody
     public String addQuestion(@RequestParam("title") String title,@RequestParam("content") String content){
@@ -87,6 +93,23 @@ public class QuestionController {
         return "detail";
 
     }
+
+    @RequestMapping(value = "/search", method = {RequestMethod.GET})
+    public String search(Model model,@RequestParam("q") String keyword )throws Exception {
+      List<Question> list=searchService.searchQuestion(keyword,0,10,"<font color=\"red\">","</font>");
+      List<ViewObject> vos=new ArrayList<ViewObject>();
+      for(Question question:list){
+          ViewObject vo=new ViewObject();
+          vo.set("question",question);
+          vo.set("user",userService.getUser(question.getUserId()));
+          vo.set("followCount",followService.getFolloweeCount(EntityType.ENTITY_QUESTION,question.getId()));
+          vos.add(vo);
+      }
+      model.addAttribute("vos",vos);
+      return   "result";
+
+    }
+
 
 
 }

@@ -3,8 +3,10 @@ import com.morgan.dao.QuestionDAO;
 import com.morgan.dao.UserDAO;
 import com.morgan.model.Comment;
 import com.morgan.model.EntityType;
+import com.morgan.model.Question;
 import com.morgan.service.CommentService;
 import com.morgan.service.MessageService;
+import com.morgan.service.SearchService;
 import com.morgan.util.JedisAdapter;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -35,12 +37,14 @@ public class WustApplicationTests {
 
 	@Autowired
 	JedisAdapter jedisAdapter;
+
+	@Autowired
+	SearchService searchService;
+
 	@Test
-	public void contextLoads() {
-
-		jedisAdapter.lpush("wust","1");
-		System.out.print(jedisAdapter.brpop(0,"wust").toString());
-
+	public void contextLoads() throws Exception{
+		List<Question> list=searchService.searchQuestion("请教",0,9,"h1","h1");
+		System.out.println(1);
 
 
 	}
