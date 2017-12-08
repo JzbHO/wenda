@@ -2,6 +2,7 @@ package com.morgan.controller;
 
 import com.morgan.model.Comment;
 import com.morgan.model.EntityType;
+import com.morgan.model.HostHolder;
 import com.morgan.model.ViewObject;
 import com.morgan.service.CommentService;
 import com.morgan.service.MySensitiveService;
@@ -30,6 +31,9 @@ public class CommentController {
     @Autowired
     QuestionService questionService;
 
+    @Autowired
+    HostHolder hostHolder;
+
     @RequestMapping(path ={"/test"} )
     @ResponseBody
     public String index() {
@@ -37,7 +41,7 @@ public class CommentController {
         return "Hello,Provider!";
     }
 
-    @RequestMapping(path={"/addComment"},method = {RequestMethod.POST})
+    @RequestMapping(path={"/addComment"},method = {RequestMethod.POST,RequestMethod.GET})
     public String addComment(@RequestParam("content") String content,
                              @RequestParam("questionId") int questionId){
         Comment comment=new Comment();
@@ -49,6 +53,7 @@ public class CommentController {
         comment.setEntityId(questionId);
         comment.setEntityType(EntityType.ENTITY_QUESTION);
         comment.setStatus(WendaUtil.COMMENT_EFFICIENT);
+        comment.setUserId(hostHolder.getUser().getId());
 
         commentService.addComment(comment);
         int count=commentService.getCommentCount(comment.getEntityType(),comment.getEntityId());

@@ -5,6 +5,7 @@ import com.morgan.model.EntityType;
 import com.morgan.model.HostHolder;
 import com.morgan.model.Question;
 import com.morgan.service.*;
+import com.morgan.service.FollowService;
 import com.morgan.util.ViewObject;
 import com.morgan.util.WendaUtil;
 import org.apache.ibatis.annotations.Param;
@@ -39,6 +40,7 @@ public class QuestionController {
 
     @Autowired
     FollowService followService;
+
 
     @Autowired
     SearchService searchService;
@@ -84,10 +86,19 @@ public class QuestionController {
             }else {
                 vo.set("liked",likeService.getLikeStatus(hostHolder.getUser().getId(),EntityType.ENTITY_QUESTION,qid));
             }
-
             vo.set("likeCount",likeService.getLikeCount(EntityType.ENTITY_COMMENT,comment.getId()));
-            vo.set("user",userService.getUser(question.getUserId()));
+            vo.set("user",userService.getUser(comment.getUserId()));
             vos.add(vo);
+        }
+        Long size=followService.getFolloweeCount(EntityType.ENTITY_QUESTION,question.getId());
+        model.addAttribute("followSize",size);
+        Boolean followed=followService.isFollow(hostHolder.getUser().getId(),EntityType.ENTITY_QUESTION,question.getId());
+        if(followed){
+            model.addAttribute("followed",true);
+            logger.info(""+followed);
+        }else {
+            model.addAttribute("followed",false);
+            logger.info(""+followed);
         }
         model.addAttribute("comments",vos);
         return "detail";

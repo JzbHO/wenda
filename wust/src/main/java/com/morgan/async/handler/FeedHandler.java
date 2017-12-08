@@ -6,7 +6,7 @@
 //import com.morgan.model.EntityType;
 //import com.morgan.model.Feed;
 //import com.morgan.service.FeedService;
-//import com.morgan.service.FollowService;
+//import com.morgan.service.FollowController;
 //import com.morgan.util.JedisAdapter;
 //import com.morgan.util.RedisKeyUtil;
 //import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +23,7 @@
 //    FeedService feedService;
 //
 //    @Autowired
-//    FollowService followService;
+//    FollowController followService;
 //
 //    @Autowired
 //    JedisAdapter jedisAdapter;

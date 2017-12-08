@@ -4,7 +4,7 @@
 //import com.morgan.model.Feed;
 //import com.morgan.model.HostHolder;
 //import com.morgan.service.FeedService;
-//import com.morgan.service.FollowService;
+//import com.morgan.service.FollowController;
 //import com.morgan.util.JedisAdapter;
 //import com.morgan.util.RedisKeyUtil;
 //import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +28,7 @@
 //    HostHolder hostHolder;
 //
 //    @Autowired
-//    FollowService followService;
+//    FollowController followService;
 //
 //    @Autowired
 //    JedisAdapter jedisAdapter;

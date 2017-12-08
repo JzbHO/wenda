@@ -32,18 +32,23 @@
             <div class="zm-side-section">
                 <div class="zm-side-section-inner" id="zh-question-side-header-wrap">
                     #if ($followed)
-                    <button class="follow-button zg-follow zg-btn-white js-follow-question" data-id="${question.id}"
-                            data-status="1">
+                    <button class="follow-button zg-follow zg-btn-white js-follow-question" id="questionId1" value="${question.id}" data-status="1">
                         取消关注
                     </button>
+                    <button class="follow-button zg-follow zg-btn-white js-follow-question" id="questionId" value="${question.id}" style="display: none;">
+                        关注问题
+                    </button>
                     #else
-                    <button class="follow-button zg-follow zg-btn-green js-follow-question" data-id="${question.id}">
+                    <button class="follow-button zg-follow zg-btn-white js-follow-question" id="questionId1" value="${question.id}" style="display: none;" data-status="1">
+                        取消关注
+                    </button>
+                    <button class="follow-button zg-follow zg-btn-white js-follow-question" id="questionId" value="${question.id}">
                         关注问题
                     </button>
                     #end
                     <div class="zh-question-followers-sidebar">
                         <div class="zg-gray-normal">
-                            <a href="javascript:void(0);"><strong class="js-user-count">${followSize}</strong></a>人关注该问题
+                            <a href="javascript:void(0);"><strong class="js-user-count" id="js-user-count">${followSize}</strong></a>人关注该问题
                         </div>
                         <div class="list zu-small-avatar-list zg-clear js-user-list">
                             #foreach($vo in $followUsers)
@@ -144,4 +149,39 @@
 </div>
 #parse("js.html")
 <script type="text/javascript" src="/scripts/main/site/detail.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#questionId").click(function () {
+            var questionId = $("#questionId").val();
+            $.ajax({
+                type: "post", //以post方式与后台沟通
+                url: "/followQuestion", //调用action
+                data: "questionId=" + questionId, //传送的数据
+                dataType: "html", //从action返回的值以html方式解释，或用"text"
+                success: function (msg) { //如果调用成功，msg为后台action返回值
+                    $('#js-user-count').html(msg); //显示action返回值
+                    $('#questionId').hide();
+                    $('#questionId1').toggle(500);
+                }
+            });
+        });
+        $("#questionId1").click(function () {
+            var questionId = $("#questionId1").val();
+            $.ajax({
+                type: "post", //以post方式与后台沟通
+                url: "/unfollowQuestion", //调用action
+                data: "questionId=" + questionId, //传送的数据
+                dataType: "html", //从action返回的值以html方式解释，或用"text"
+                success: function (msg) { //如果调用成功，msg为后台action返回值
+                    $('#js-user-count').html(msg); //显示action返回值
+                    $('#questionId1').hide();
+                    $('#questionId').toggle(500);
+                }
+            });
+        });
+
+    });
+</script>
+
+
 #parse("footer.html")
