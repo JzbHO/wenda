@@ -72,11 +72,13 @@ public class HomeController {
     }
 
     @RequestMapping(path={"/index","/"},method = {RequestMethod.GET})
-    public String index(Model model, HttpSession session){
+    public String index(Model model){
         List<ViewObject> vos=getLatestQuestions(85212,0,5);
         model.addAttribute("vos",vos);
         return "index";
     }
+
+
 
 
 
@@ -87,7 +89,7 @@ public class HomeController {
             ViewObject vo=new ViewObject();
             vo.set("question",question);
             vo.set("user",userService.getUser(question.getUserId()));
-            vo.set("followCount",jedisAdapter.zcard(RedisKeyUtil.getLikeKey(EntityType.ENTITY_QUESTION,question.getId())));
+            vo.set("followCount",followService.getFolloweeCount(EntityType.ENTITY_QUESTION,question.getId()));
             vos.add(vo);
         }
         return vos;

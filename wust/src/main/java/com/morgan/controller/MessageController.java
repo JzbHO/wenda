@@ -67,6 +67,7 @@ public class MessageController {
 
     @RequestMapping(path={"/msg/detail"},method = {RequestMethod.GET})
     public String msg(Model model, @RequestParam("conversationId") String conversationId) {
+        messageService.updateHasRead(conversationId,hostHolder.getUser().getId());
         List<ViewObject> messages=new ArrayList<>();
                 List<Message> message=messageService.getByConversationId(conversationId,0,10);
                 if(message!=null) {
@@ -95,7 +96,8 @@ public class MessageController {
                 int targetId = msg.getFromId();
                 User user = userService.getUser(targetId);
                 vo.set("user", user);
-                vo.set("unread",msg.getHasRead());
+                vo.set("unread",messageService.getUnreadCount(msg.getConversationId(),hostHolder.getUser().getId()));
+                vo.set("allMsgCount",messageService.getMessageCount(msg.getConversationId()));
                 conversations.add(vo);
             }
             model.addAttribute("conversations", conversations);

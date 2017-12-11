@@ -1,10 +1,7 @@
 package com.morgan.dao;
 
 import com.morgan.model.Message;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -27,10 +24,21 @@ public interface MessageDAO {
                                       @Param("limit") int limit);
 
     //select * ,count(id) as cnt from (select *from message where to_id=20 order by created_date desc)ll group by from_id;
-    @Select({"select "+INSERT_FIELDS+ ",count(id) as id from "+" (select * from message where to_id=#{id} order by created_date desc)"+
-            "ll group by from_id limit #{offset}, #{num}"})
-
+//    @Select({"select "+INSERT_FIELDS+ ",count(id) as id from "+" (select * from message where to_id=#{id} order by created_date desc)"+
+//            "ll group by from_id limit #{offset}, #{num}"})
+    @Select({"select "+INSERT_FIELDS+" from message where created_date in(select max(created_date) maxdate from message where to_id=#{id} or from_id=#{id} group by conversation_id) limit #{offset},#{num}"})
     List<Message> getAllConversation(@Param("id")int id,
                                      @Param("offset")int offset,
                                      @Param("num")int num);
+
+    @Select({"select count(id) as id from message where conversation_id=#{conversationId} and to_id=#{id} and has_read=0" })
+    int getUnreadCount(@Param("conversationId")String conversationId,
+                       @Param("id")int id);
+
+    @Select({"select count(id) as id from message where conversation_id=#{conversationId}" })
+    int getMessageCount(@Param("conversationId")String conversationId);
+
+    @Update({"update message set has_read=1 where conversation_id=#{conversationId} and to_id=#{id}"})
+    void updateHasRead(@Param("conversationId")String conversationId,
+                       @Param("id")int id);
 }

@@ -25,11 +25,8 @@ public class FeedService {
     }
 
     public List<Feed> getUserFeeds(int maxId,List<Integer> userIds,int count){
-
-
         return feedDAO.selectUserFeeds(maxId,userIds,count);
     }
-
 
     public Feed geFeedById(int feedId) {
         return feedDAO.getFeedById(feedId);

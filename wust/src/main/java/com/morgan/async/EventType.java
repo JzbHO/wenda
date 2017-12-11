@@ -6,8 +6,7 @@ package com.morgan.async;
 public enum  EventType {
     LIKE(),
     COMMENT(),
-    LOGIN(),
-    MAIL(),
+    FOLLOW(),
 
 
     EventType(){}

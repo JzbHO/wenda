@@ -27,4 +27,16 @@ public class MessageService {
     public List<Message> getAllconversation(int id, int offset, int num) {
         return messageDAO.getAllConversation(id,offset,num);
     }
+
+    public int getUnreadCount(String convsersation_id,int id) {
+        return messageDAO.getUnreadCount(convsersation_id,id);
+    }
+
+    public int getMessageCount(String convsersation_id) {
+        return messageDAO.getMessageCount(convsersation_id);
+    }
+
+    public void updateHasRead(String convsersation_id,int toId) {
+        messageDAO.updateHasRead(convsersation_id,toId);
+    }
 }

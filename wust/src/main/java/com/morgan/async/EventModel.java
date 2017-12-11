@@ -1,6 +1,7 @@
 package com.morgan.async;
 
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -9,7 +10,25 @@ public class EventModel{
     private int userId;
     private int eneityId;
     private int entityType;
+    private Date date;
     private Map<String,Object> map=new HashMap<>();
+
+    public Map<String, Object> getMap() {
+        return map;
+    }
+
+    public void setMap(Map<String, Object> map) {
+        this.map = map;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
 
     public EventType getEventType() {
         return eventType;
@@ -43,13 +62,7 @@ public class EventModel{
         this.entityType = entityType;
     }
 
-    public Map<String, Object> getMap() {
-        return map;
-    }
 
-    public void setMap(Map<String, Object> map) {
-        this.map = map;
-    }
 }
 
 

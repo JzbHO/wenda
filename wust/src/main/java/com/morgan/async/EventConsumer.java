@@ -4,6 +4,8 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.morgan.util.JedisAdapter;
 import com.morgan.util.RedisKeyUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +17,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Handler;
+
 
 @Component
 public class EventConsumer implements InitializingBean,ApplicationContextAware{
@@ -25,6 +27,8 @@ public class EventConsumer implements InitializingBean,ApplicationContextAware{
     ApplicationContext applicationContext;
 
     private Map<EventType,List<EventHandler>> config=new HashMap<EventType,List<EventHandler>>();
+
+    private static final Logger logger= LoggerFactory.getLogger(EventConsumer.class);
 
     @Override
     public void afterPropertiesSet() throws Exception {
@@ -47,8 +51,8 @@ public class EventConsumer implements InitializingBean,ApplicationContextAware{
             public void run() {
                 while(true){
                     List<String> list=jedisAdapter.brpop(0,RedisKeyUtil.getBizEventqueue());
-
-                        EventModel model= (EventModel) JSONObject.parse(list.get(1));
+                        logger.info(list.get(1));
+                        EventModel model= (EventModel) JSONObject.parseObject(list.get(1),EventModel.class);
                         List<EventHandler> handlers=config.get(model.getEventType());
                         for(EventHandler hand:handlers){
                             hand.doHandle(model);

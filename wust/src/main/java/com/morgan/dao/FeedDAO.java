@@ -12,13 +12,11 @@ import java.util.List;
 @Mapper
 public interface FeedDAO {
     String TABLE_NAME = " feed ";
-    String INSERT_FIELDS = "created_date,user_id,date,type";
+    String INSERT_FIELDS = "created_date,user_id,data,type";
     String SELECT_FIELDS = " id, " + INSERT_FIELDS;
 
 
 
-//    @Select({"select",SELECT_FIELDS,"from",TABLE_NAME,"where id=#{entityId} and "+
-//            "entity_type=#{entityType}"})
 
     List<Feed> selectUserFeeds(@Param("offset") int offset,
                                @Param("userIds") List<Integer> userIds,
@@ -27,7 +25,7 @@ public interface FeedDAO {
     @Select({"select",SELECT_FIELDS,"from",TABLE_NAME,"where id=#{feedId}"})
     Feed getFeedById(int feedId);
 
-    @Insert({"insert into ", TABLE_NAME,"(", INSERT_FIELDS ,") values (#{created_date},#{user_id},#{date},#{type})"})
+    @Insert({"insert into ", TABLE_NAME,"(", INSERT_FIELDS ,") values (#{createDate},#{userId},#{data},#{type})"})
     int addFeed(Feed feed);
 
 
