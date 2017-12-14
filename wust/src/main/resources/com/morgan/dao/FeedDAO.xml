@@ -12,7 +12,7 @@
         <include refid="table"/>
 
         <if test="userIds.size() != 0">
-             user_id in
+             WHERE user_id in
             <foreach  item="item" collection="userIds" index="index"
                       open="(" separator="," close=")">
                 #{item}

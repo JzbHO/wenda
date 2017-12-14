@@ -3,8 +3,10 @@ package com.morgan.controller;
 import com.morgan.model.EntityType;
 import com.morgan.model.Feed;
 import com.morgan.model.HostHolder;
+import com.morgan.model.ViewObject;
 import com.morgan.service.FeedService;
 import com.morgan.service.FollowService;
+import com.morgan.service.UserService;
 import com.morgan.util.JedisAdapter;
 import com.morgan.util.RedisKeyUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +33,8 @@ public class FeedController {
     FollowService followService;
 
     @Autowired
+    UserService userService;
+    @Autowired
     JedisAdapter jedisAdapter;
     @RequestMapping(path={"/pullfeeds"},method = {RequestMethod.GET,RequestMethod.POST})
     public String getPullFeeds(Model model){
@@ -40,7 +44,14 @@ public class FeedController {
         }
         List<Integer> array=followService.getFollowList(localUserId,EntityType.ENTITY_USER,Integer.MAX_VALUE);
         List<Feed> feeds=feedService.getUserFeeds(0,array,10);
-        model.addAttribute("feeds",feeds);
+        List<ViewObject> vos=new ArrayList<>();
+        for(Feed feed:feeds){
+            ViewObject vo=new ViewObject();
+            vo.set("user",userService.getUser(feed.getUserId()));
+            vo.set("feed",feed);
+            vos.add(vo);
+        }
+        model.addAttribute("feeds",vos);
         return "feeds";
     }
 

@@ -60,7 +60,7 @@ public class WustApplicationTests {
 	public void contextLoads() throws Exception{
 		Feed feed=new Feed();
 		feed.setUserId(1);
-		feed.setCreateDate(new Date());
+		feed.setCreatedDate(new Date());
 		feed.setType(TimeLineType.FOCUS);
 		feed.setData("问题");
 		feedDAO.addFeed(feed);

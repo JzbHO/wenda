@@ -1,17 +1,11 @@
 package com.morgan.controller;
 
 import com.alibaba.fastjson.JSONObject;
-import com.morgan.model.EntityType;
-import com.morgan.model.Feed;
-import com.morgan.model.Question;
+import com.morgan.model.*;
 import com.morgan.model.ViewObject;
-import com.morgan.service.FeedService;
-import com.morgan.service.FollowService;
-import com.morgan.service.QuestionService;
+import com.morgan.service.*;
 
-import com.morgan.service.UserService;
-import com.morgan.util.JedisAdapter;
-import com.morgan.util.RedisKeyUtil;
+import com.morgan.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -42,6 +36,15 @@ public class HomeController {
 
     @Autowired
     FollowService followService;
+
+    @Autowired
+    HostHolder hostHolder;
+
+    @Autowired
+    CommentService commentService;
+
+    @Autowired
+    LikeService likeService;
 
 
 
@@ -76,6 +79,20 @@ public class HomeController {
         List<ViewObject> vos=getLatestQuestions(85212,0,5);
         model.addAttribute("vos",vos);
         return "index";
+    }
+
+    @RequestMapping(path={"/user/{userId}"},method = {RequestMethod.GET})
+    public String personCenter(Model model,@PathVariable("userId") int userId){
+        ViewObject vo=new ViewObject();
+        vo.set("user",userService.getUser(userId));
+        //粉丝数量
+        vo.set("followeeCount",followService.getFolloweeCount(EntityType.ENTITY_USER,userId));
+        //关注数量
+        vo.set("followerCount",followService.getFollowerCount(userId,EntityType.ENTITY_USER));
+        vo.set("commentCount",commentService.getUserCommentCount(userId));
+        vo.set("followed",followService.isFollow(hostHolder.getUser().getId(),EntityType.ENTITY_USER,userId));
+        model.addAttribute("profileUser",vo);
+        return "profile";
     }
 
 

@@ -18,7 +18,8 @@ class Handler(BaseHandler):
 
     def add_question(self,url,title,content):
         try:
-            userId=int(str(time.time()).replace(".","")[6:-1]);
+            userId=int(str(100)+str(time.time()).replace(".","")[6:-1]);
+            print 'userId='+str(userId)
             name=str(time.time()).replace(".","")[5:-1]
             cursor=self.db.cursor()
             sql='insert into question(title,content,user_id,created_date,comment_count) values("%s","%s","%d",now(),0)'% (title,content,userId)
@@ -93,7 +94,7 @@ class Handler(BaseHandler):
 
         title=response.doc('h1').text()
         content=response.doc('div.topic_content').html().replace('"','#')
-        url=response.doc('a>img').attr.src
+        url=response.doc('#Main').find('img').attr.src
         qid=self.add_question(url,title,content)
         for each in response.doc('tr>td>img').items():
             if(k1>=3):

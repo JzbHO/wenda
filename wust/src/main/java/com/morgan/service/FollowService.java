@@ -36,7 +36,6 @@ public class FollowService {
         return list.size()==2&&(Long)list.get(0)>0&&(Long)list.get(1)>0;
     }
     public boolean unfollow(int userId,int entityType,int entityId){
-        Date date=new Date();
         String follwekey=RedisKeyUtil.getFollowKey(userId,entityType);
         String follweBykey=RedisKeyUtil.getFollowByKey(entityType,entityId);
 
@@ -76,26 +75,22 @@ public class FollowService {
         String follwekeey=RedisKeyUtil.getFollowKey(entityType,enetityId);
         return trans(jedisAdapter.zrevrange(follwekeey,0,-1));
     }
-    //获取关注数量
+    //获取粉丝数量
     public Long getFolloweeCount(int entityType,int entityId){
         String follwekey=RedisKeyUtil.getFollowByKey(entityType,entityId);
         return jedisAdapter.zcard(follwekey);
     }
-
+    //获取关注人数量
+    public long getFollowerCount(int userId,int entityType) {
+        String follower=RedisKeyUtil.getFollowKey(userId,entityType);
+        return jedisAdapter.zcard(follower);
+    }
 
 
     public boolean isFollow(int userId,int entityType,int entityId){
         String follwedkey=RedisKeyUtil.getFollowByKey(entityType,entityId);
         return jedisAdapter.zscore(follwedkey,String.valueOf(userId))!=null;
     }
-
-
-
-
-
-
-
-
 
 
 }

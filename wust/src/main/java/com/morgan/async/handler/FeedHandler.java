@@ -43,7 +43,7 @@ public class FeedHandler implements EventHandler {
     public void doHandle(EventModel eventModel) {
         Feed feed=new Feed();
         feed.setUserId(eventModel.getUserId());
-        feed.setCreateDate(eventModel.getDate());
+        feed.setCreatedDate(eventModel.getDate());
         User user= JSONObject.parseObject( JSONObject.toJSONString(eventModel.getMap().get("user")),User.class);
         if(eventModel.getEventType()==EventType.FOLLOW) {
             if (eventModel.getEntityType() == EntityType.ENTITY_QUESTION) {

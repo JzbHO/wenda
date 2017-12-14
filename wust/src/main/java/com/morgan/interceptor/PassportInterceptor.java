@@ -26,7 +26,7 @@ public class PassportInterceptor implements HandlerInterceptor{
             if(hostHolder.getUser()==null) {
                 httpServletResponse.sendRedirect("/reglogin");
             }else {
-                httpServletResponse.sendRedirect("/");
+                return true;
             }
         return true;
     }

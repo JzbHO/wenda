@@ -50,7 +50,6 @@ public class FollowController {
         Long size=followService.getFolloweeCount(EntityType.ENTITY_QUESTION,questionId);
         return  ""+size;
     }
-
     @RequestMapping(path ={"/unfollowQuestion"},method = {RequestMethod.POST,RequestMethod.GET} )
     @ResponseBody
     public String unfollowQusetion(@RequestParam("questionId") int questionId) {
@@ -60,6 +59,25 @@ public class FollowController {
         Long size=followService.getFolloweeCount(EntityType.ENTITY_QUESTION,questionId);
         return  ""+size;
     }
+
+    @RequestMapping(path={"/followUser"},method = {RequestMethod.POST,RequestMethod.GET} )
+    @ResponseBody
+    public String followUser(@RequestParam("userId") int userId) {
+        logger.info("关注服务到达---");
+        followService.follow(hostHolder.getUser().getId(),EntityType.ENTITY_USER,userId);
+        return followService.getFolloweeCount(EntityType.ENTITY_USER,userId)+"";
+    }
+
+    @RequestMapping(path ={"/unfollowUser"},method = {RequestMethod.POST,RequestMethod.GET} )
+    @ResponseBody
+    public String unfollowUser(@RequestParam("userId") int userId) {
+        logger.info("关注服务到达---");
+        followService.unfollow(hostHolder.getUser().getId(),EntityType.ENTITY_USER,userId);
+        return followService.getFolloweeCount(EntityType.ENTITY_USER,userId)+"";
+    }
+
+
+
 
 
 }

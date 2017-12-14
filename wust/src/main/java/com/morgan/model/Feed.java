@@ -13,7 +13,7 @@ public class Feed {
     private int id;
     private TimeLineType type;  //不同类型渲染界面不一样
     private int userId;
-    private Date createDate;
+    private Date createdDate;
     private String data;
     private JSONObject jsonObject;
 
@@ -49,12 +49,12 @@ public class Feed {
         this.userId = userId;
     }
 
-    public Date getCreateDate() {
-        return createDate;
+    public Date getCreatedDate() {
+        return createdDate;
     }
 
-    public void setCreateDate(Date createDate) {
-        this.createDate = createDate;
+    public void setCreatedDate(Date createdDate) {
+        this.createdDate = createdDate;
     }
 
     public String getData() {
