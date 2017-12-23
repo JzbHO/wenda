@@ -144,7 +144,9 @@ public class JedisAdapter  implements InitializingBean {
     @Override
     public void afterPropertiesSet() throws Exception {
         pool=new JedisPool("redis://localhost:6379/10");
+       // pool=new JedisPool("redis://119.29.20.230:6379/10");
     }
+
 
      public long add(String key,String value){
         Jedis jedis=null;
