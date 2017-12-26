@@ -36,11 +36,19 @@ public class LoginRequiredInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o) throws Exception {
+        logger.info("Login handerl--------");
         String loginTicket=null;
+        if(httpServletRequest==null){
+            logger.info("-----httpServletRequest==null-----");
+            return  true;
+        }
         Cookie [] cookies=httpServletRequest.getCookies();
+        if(cookies==null)
+            return true;
         for(Cookie cookie:cookies){
             if(cookie.getName().equals("ticket")) {
                 loginTicket = cookie.getValue();
+                logger.info(loginTicket+"---------");
                 break;
             }
         }

@@ -18,7 +18,7 @@ public class JedisAdapter  implements InitializingBean {
     private static final Logger logger = LoggerFactory.getLogger(JedisAdapter.class);
 
 
-    public  static void main(String []args) throws InterruptedException {
+  //  public  static void main(String []args) throws InterruptedException {
 //        //指定9 号数据库
 //        Jedis jedis=new Jedis("redis://localhost:6379/9");
 //        //删除指定数据库
@@ -136,9 +136,7 @@ public class JedisAdapter  implements InitializingBean {
 //        print(9,jedis.linsert(listname, BinaryClient.LIST_POSITION.AFTER,"4","xx"));
 //        print(10,jedis.linsert(listname, BinaryClient.LIST_POSITION.BEFORE,"4","bb"));
 //        print(4,jedis.lrange(listname,0,12));
-    }
-
-
+//    }
 
 
     @Override

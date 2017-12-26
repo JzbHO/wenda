@@ -77,6 +77,9 @@ public class LoginController {
                 Cookie cookie = new Cookie("ticket",map.get("ticket").toString());
                 cookie.setPath("/");
                 response.addCookie(cookie);
+                //失效原来的Ticket
+//                loginTicketService.updateTicket(userService.getByName(username).getId());
+//                loginTicketService.addTicket();
                logService.addLoginLog((Integer) map.get("userId"));
                 if(next!=null){
                     return "redirect:/";

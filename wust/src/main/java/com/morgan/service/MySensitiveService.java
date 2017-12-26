@@ -111,15 +111,15 @@ public class MySensitiveService implements InitializingBean {
 
   }
 
-  public static void main(String []args){
-      //sout
-      MySensitiveService mySensitiveService=new MySensitiveService();
-      mySensitiveService.add("色情");
-      mySensitiveService.add("赌博");
-
-      System.out.print(mySensitiveService.filter("你好色 情呵呵"));
-
-  }
+//  public static void main(String []args){
+//      //sout
+//      MySensitiveService mySensitiveService=new MySensitiveService();
+//      mySensitiveService.add("色情");
+//      mySensitiveService.add("赌博");
+//
+//      System.out.print(mySensitiveService.filter("你好色 情呵呵"));
+//
+//  }
 
 
 

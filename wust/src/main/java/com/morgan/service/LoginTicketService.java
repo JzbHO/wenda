@@ -21,4 +21,7 @@ public class LoginTicketService {
         return map;
     }
 
+//    public void updateTicket(int userId) {
+//        loginTicketDAO.updateTicket(userId,1);
+//    }
 }
