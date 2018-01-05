@@ -21,7 +21,10 @@ public class SearchService {
 
     @Autowired
     QuestionService questionService;
-    private static final String SOLR_URL="http://127.0.0.1:8983/solr/wenda";
+    //private static final String SOLR_URL="http://127.0.0.1:8983/solr/wenda";
+    private static final String SOLR_URL="http://119.29.20.230:8983/solr/wenda1";
+
+
     private HttpSolrClient client=new HttpSolrClient.Builder(SOLR_URL).build();
     private static final String QUESTION_TITLE_FIELD="question_title";
     private static final String QUESTION_CONTENT_FIELD="question_content";

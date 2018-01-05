@@ -36,10 +36,10 @@ public class LoginRequiredInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o) throws Exception {
-        logger.info("Login handerl--------");
+      //  logger.info("Login handerl--------");
         String loginTicket=null;
         if(httpServletRequest==null){
-            logger.info("-----httpServletRequest==null-----");
+        //    logger.info("-----httpServletRequest==null-----");
             return  true;
         }
         Cookie [] cookies=httpServletRequest.getCookies();
@@ -48,7 +48,7 @@ public class LoginRequiredInterceptor implements HandlerInterceptor {
         for(Cookie cookie:cookies){
             if(cookie.getName().equals("ticket")) {
                 loginTicket = cookie.getValue();
-                logger.info(loginTicket+"---------");
+               // logger.info(loginTicket+"---------");
                 break;
             }
         }
@@ -57,9 +57,9 @@ public class LoginRequiredInterceptor implements HandlerInterceptor {
             LoginTicket logT=loginTicketDAO.selectByTicket(loginTicket);
             if(logT!=null&&logT.getStatus()==0&&logT.getExpired().after(new Date())){
                 int userId=logT.getUserId();
-                logger.info(userId+"userId------------");
+               // logger.info(userId+"userId------------");
                 hostHolder.setUser(userDAO.selectUser(userId));
-                logger.info(hostHolder.getUser()+"------------");
+                //logger.info(hostHolder.getUser()+"------------");
                 return true;
             }
         }

@@ -156,7 +156,7 @@
         $("#userId1").click(function () {
             var userId = $("#userId1").val();
             $.ajax({
-                type: "post", //以post方式与后台沟通
+                type: "post", //以post方式与后台沟通  GET
                 url: "/unfollowUser", //调用action
                 data: "userId=" + userId, //传送的数据
                 dataType: "html", //从action返回的值以html方式解释，或用"text"

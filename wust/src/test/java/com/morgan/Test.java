@@ -2,6 +2,7 @@ package com.morgan;
 
 import com.morgan.util.JedisAdapter;
 import org.springframework.stereotype.Component;
+import redis.clients.jedis.JedisPool;
 
 import java.util.Date;
 import java.util.concurrent.*;
@@ -52,6 +53,15 @@ class Producer implements Runnable{
 }
 
 public class Test {
+//    public static void main(String[]args){
+//        JedisPool pool;
+//        pool=new JedisPool("redis://119.29.20.230:6379/10");
+//        pool.getResource();
+//        System.out.println(pool==null);
+//
+//    }
+
+
 
     private static AtomicInteger count=new AtomicInteger(0);
 
@@ -135,9 +145,6 @@ public class Test {
             }
 
 
-
-        }
-        public  static  void main(String []args){
 
         }
 
